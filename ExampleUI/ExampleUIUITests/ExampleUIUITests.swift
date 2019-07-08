@@ -29,6 +29,15 @@ class ExampleUIUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+        let tabBarsQuery = XCUIApplication().tabBars
+        let secondButton = tabBarsQuery.buttons["Second"]
+        secondButton.tap()
+
+        let firstButton = tabBarsQuery.buttons["First"]
+        firstButton.tap()
+        secondButton.tap()
+        firstButton.tap()        
     }
 
 }
