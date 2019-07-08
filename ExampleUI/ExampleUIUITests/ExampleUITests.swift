@@ -41,6 +41,6 @@ class ExampleUITests: BaseExampleTests {
         secondButton.tap()
         firstButton.tap()
 
-         XCUIDevice().orientation = .portrait
+        XCUIDevice.shared.orientation = .portrait
     }
 }
