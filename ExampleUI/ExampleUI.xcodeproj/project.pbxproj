@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,8 @@
 		D87ACE9622D378C300C5D6D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D87ACE9522D378C300C5D6D6 /* Assets.xcassets */; };
 		D87ACE9922D378C300C5D6D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D87ACE9722D378C300C5D6D6 /* LaunchScreen.storyboard */; };
 		D87ACEA422D378C300C5D6D6 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ACEA322D378C300C5D6D6 /* ExampleUITests.swift */; };
-		D87ACEAF22D378C300C5D6D6 /* ExampleUIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ACEAE22D378C300C5D6D6 /* ExampleUIUITests.swift */; };
+		D87ACEAF22D378C300C5D6D6 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ACEAE22D378C300C5D6D6 /* ExampleUITests.swift */; };
+		D87ACEC022D39D1900C5D6D6 /* BaseExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87ACEBF22D39D1900C5D6D6 /* BaseExampleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,8 +51,9 @@
 		D87ACEA322D378C300C5D6D6 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		D87ACEA522D378C300C5D6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D87ACEAA22D378C300C5D6D6 /* ExampleUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D87ACEAE22D378C300C5D6D6 /* ExampleUIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUIUITests.swift; sourceTree = "<group>"; };
+		D87ACEAE22D378C300C5D6D6 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		D87ACEB022D378C300C5D6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D87ACEBF22D39D1900C5D6D6 /* BaseExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExampleTests.swift; sourceTree = "<group>"; };
 		FE150ED644FE4351D73A8E56 /* Pods-ExampleUIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleUIUITests.release.xcconfig"; path = "Target Support Files/Pods-ExampleUIUITests/Pods-ExampleUIUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,10 +149,35 @@
 		D87ACEAD22D378C300C5D6D6 /* ExampleUIUITests */ = {
 			isa = PBXGroup;
 			children = (
-				D87ACEAE22D378C300C5D6D6 /* ExampleUIUITests.swift */,
+				D87ACEBE22D39CEE00C5D6D6 /* Features */,
+				D87ACEBD22D39CCC00C5D6D6 /* Step Definitions */,
+				D87ACEBC22D39CBE00C5D6D6 /* Screens */,
+				D87ACEAE22D378C300C5D6D6 /* ExampleUITests.swift */,
+				D87ACEBF22D39D1900C5D6D6 /* BaseExampleTests.swift */,
 				D87ACEB022D378C300C5D6D6 /* Info.plist */,
 			);
 			path = ExampleUIUITests;
+			sourceTree = "<group>";
+		};
+		D87ACEBC22D39CBE00C5D6D6 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		D87ACEBD22D39CCC00C5D6D6 /* Step Definitions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Step Definitions";
+			sourceTree = "<group>";
+		};
+		D87ACEBE22D39CEE00C5D6D6 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -346,7 +373,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D87ACEAF22D378C300C5D6D6 /* ExampleUIUITests.swift in Sources */,
+				D87ACEAF22D378C300C5D6D6 /* ExampleUITests.swift in Sources */,
+				D87ACEC022D39D1900C5D6D6 /* BaseExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

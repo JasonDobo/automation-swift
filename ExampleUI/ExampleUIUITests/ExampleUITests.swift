@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ExampleUIUITests: XCTestCase {
+class ExampleUITests: BaseExampleTests {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -27,17 +27,20 @@ class ExampleUIUITests: XCTestCase {
     }
 
     func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-
         let tabBarsQuery = XCUIApplication().tabBars
-        let secondButton = tabBarsQuery.buttons["Second"]
-        secondButton.tap()
+        tryWait(for: tabBarsQuery.buttons["Second"], with: .exists)
 
         let firstButton = tabBarsQuery.buttons["First"]
+        tryWait(for: firstButton, with: .enabled)
+
+        let secondButton = XCUIApplication().staticTexts["First View"]
+        wait(for: secondButton, with: .hittable)
+
+        secondButton.tap()
         firstButton.tap()
         secondButton.tap()
-        firstButton.tap()        
-    }
+        firstButton.tap()
 
+         XCUIDevice().orientation = .portrait
+    }
 }
