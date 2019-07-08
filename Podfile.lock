@@ -1,22 +1,18 @@
 PODS:
-  - Alamofire (3.5.1)
   - XCTest-Gherkin (0.19.1):
     - XCTest-Gherkin/Core (= 0.19.1)
   - XCTest-Gherkin/Core (0.19.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
   - XCTest-Gherkin
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
     - XCTest-Gherkin
 
 SPEC CHECKSUMS:
-  Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
   XCTest-Gherkin: f7cb7e6407a9196fdef068aed0becc321ef0b812
 
-PODFILE CHECKSUM: 98e6f3e318d257dc4219c4bcca7459ef06642ce0
+PODFILE CHECKSUM: 5d70bb2e690ba2bbad0153023f70c384ee3f49f7
 
 COCOAPODS: 1.7.3
