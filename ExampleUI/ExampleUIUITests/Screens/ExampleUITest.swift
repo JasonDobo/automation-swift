@@ -1,14 +1,6 @@
-//
-//  ExampleUIUITests.swift
-//  ExampleUIUITests
-//
-//  Created by Jason Dobo on 08/07/2019.
-//  Copyright © 2019 Jason Dobo. All rights reserved.
-//
-
 import XCTest
 
-class ExampleUITests: BaseExampleTests {
+class ExampleUITest: BaseExampleTests {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -31,10 +23,11 @@ class ExampleUITests: BaseExampleTests {
         tryWait(for: tabBarsQuery.buttons["Second"], with: .exists)
 
         let firstButton = tabBarsQuery.buttons["First"]
+        let secondButton = tabBarsQuery.buttons["Second"]
         tryWait(for: firstButton, with: .enabled)
 
-        let secondButton = XCUIApplication().staticTexts["First View"]
-        wait(for: secondButton, with: .hittable)
+        let title = XCUIApplication().staticTexts["First View"]
+        wait(for: title, with: .hittable)
 
         secondButton.tap()
         firstButton.tap()

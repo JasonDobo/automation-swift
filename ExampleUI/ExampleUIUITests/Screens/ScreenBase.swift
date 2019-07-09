@@ -1,14 +1,6 @@
-//
-//  ExampleUIUITests.swift
-//  ExampleUIUITests
-//
-//  Created by Jason Dobo on 08/07/2019.
-//  Copyright © 2019 Jason Dobo. All rights reserved.
-//
-
 import XCTest
 
-class BaseExampleTests: XCTestCase {
+class ScreenBase {
 
     enum Match {
         case contains(String)
@@ -62,9 +54,9 @@ class BaseExampleTests: XCTestCase {
         }
 
         let myPredicate = NSPredicate(format: state.rawValue)
-        // let testcase = XCTestCase() //  Only needed if not in the main test class
+        let testcase = XCTestCase()
 
-        let myExpectation = expectation(for: myPredicate, evaluatedWith: element, handler: nil)
+        let myExpectation = testcase.expectation(for: myPredicate, evaluatedWith: element, handler: nil)
         return XCTWaiter().wait(for: [myExpectation], timeout: timeout) ==  XCTWaiter.Result.completed
     }
 
@@ -82,9 +74,9 @@ class BaseExampleTests: XCTestCase {
     @discardableResult
     func waitFor(count: Int, of query: XCUIElementQuery, timeout time: TimeInterval = 15.0) -> Bool {
         let count = NSPredicate(format: ElementState.count.rawValue + String(count))
-        // let testcase = XCTestCase()
+        let testcase = XCTestCase()
 
-        let myExpectation = expectation(for: count, evaluatedWith: query, handler: nil)
+        let myExpectation = testcase.expectation(for: count, evaluatedWith: query, handler: nil)
         return XCTWaiter().wait(for: [myExpectation], timeout: time) == XCTWaiter.Result.completed
     }
 
@@ -106,5 +98,34 @@ class BaseExampleTests: XCTestCase {
     func waitAndTap(element: XCUIElement, withState state: ElementState, waiting timeout: TimeInterval = 10.0) {
         tryWait(for: element, with: state, waiting: timeout)
         element.tap()
+    }
+}
+
+extension XCUIElement {
+    func forceTap() {
+        if self.isHittable {
+            self.tap()
+        } else {
+            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: .zero)
+            coordinate.tap()
+        }
+    }
+
+    func clearAndType(text: String) {
+        self.deleteText()
+        self.typeText(text)
+    }
+
+    private func deleteText() {
+        guard let stringValue = self.value as? String else {
+            return
+        }
+
+        if let placeholderString = self.placeholderValue, placeholderString == stringValue {
+            return
+        }
+
+        let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
+        self.typeText(deleteString)
     }
 }
