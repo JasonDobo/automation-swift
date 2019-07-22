@@ -33,6 +33,7 @@ class ExampleUITest: BaseExampleTests {
         firstButton.tap()
         secondButton.tap()
         firstButton.tap()
+        tryWaitForAll(elements: [firstButton, secondButton], withState: .exists, with: .all)
 
         XCUIDevice.shared.orientation = .portrait
     }

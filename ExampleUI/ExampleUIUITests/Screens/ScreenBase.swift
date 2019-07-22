@@ -99,6 +99,67 @@ class ScreenBase {
         tryWait(for: element, with: state, waiting: timeout)
         element.tap()
     }
+
+    @discardableResult
+    func tryWaitForAll(elements: [XCUIElement], withState state: ElementState, with strategy: MatchingCountStratagey, timeout time: TimeInterval = 15.0, handler: (([XCUIElement]) -> Void)? = nil) -> Bool {
+        let myPredicate = NSPredicate(format: state.rawValue)
+        var matchedElements: [XCUIElement]?
+        var allExpectations: [XCTNSPredicateExpectation] = []
+        var elementsMatched: [XCUIElement] = []
+
+        allExpectations = elements.enumerated().map { (_, element) in
+            return XCTNSPredicateExpectation(predicate: myPredicate, object: element).with {
+                $0.handler = {
+                    if matchedElements != nil { return true }
+                    elementsMatched.append(element)
+                    switch strategy {
+                    case .all:
+                        if elementsMatched.count == elements.count {
+                            matchedElements = elements
+                            allExpectations.forEach { $0.fulfill() }
+                        }
+                    case let .count(count):
+                        if elementsMatched.count == count {
+                            matchedElements = elements
+                            allExpectations.forEach { $0.fulfill() }
+                        }
+                    }
+                    return true
+                }
+            }
+        }
+
+        let result = XCTWaiter().wait(for: allExpectations, timeout: time, enforceOrder: false)
+        if let matchedElements = matchedElements {
+            handler?(matchedElements)
+        }
+        return result == .completed
+    }
+
+    @discardableResult
+    func tryWaitFor(elements: [XCUIElement], withState state: ElementState, timeout: TimeInterval = 15.0, handler: ((XCUIElement) -> Void)? = nil) -> Bool {
+        let myPredicate = NSPredicate(format: state.rawValue)
+        var matchedElement: XCUIElement?
+
+        var allExpectations: [XCTNSPredicateExpectation]!
+
+        allExpectations = elements.map { (element) -> XCTNSPredicateExpectation in
+            return XCTNSPredicateExpectation(predicate: myPredicate, object: element).with {
+                $0.handler = {
+                    if matchedElement != nil { return true }
+                    matchedElement = element
+                    allExpectations.forEach { $0.fulfill() }
+                    return true
+                }
+            }
+        }
+
+        let result = XCTWaiter().wait(for: allExpectations, timeout: timeout, enforceOrder: false)
+        if let matchedElement = matchedElement {
+            handler?(matchedElement)
+        }
+        return result == .completed
+    }
 }
 
 extension XCUIElement {
@@ -127,5 +188,43 @@ extension XCUIElement {
 
         let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
         self.typeText(deleteString)
+    }
+}
+
+extension NSObject : With {
+}
+
+/// Copied from https://github.com/devxoul/Then
+
+public protocol With {}
+
+extension With where Self: Any {
+    /// Makes it available to set properties with closures just after initializing and copying the value types.
+    ///
+    ///     let label = UILabel().with {
+    ///       $0.textAlignment = .center
+    ///       $0.textColor = .black
+    ///       $0.text = "Hello, World!"
+    ///     }
+    ///
+    ///     let frame = CGRect().with {
+    ///       $0.origin.x = 10
+    ///       $0.size.width = 100
+    ///     }
+    @discardableResult public func with(_ block: (inout Self) throws -> Void) rethrows -> Self {
+        var copy = self
+        try block(&copy)
+        return copy
+    }
+
+    /// Makes it available to execute something with closures.
+    ///
+    ///     UserDefaults.standard.do {
+    ///       $0.set("jon", forKey: "username")
+    ///       $0.set("jonsnow@westeros.com", forKey: "email")
+    ///       $0.synchronize()
+    ///     }
+    public func `do`(_ block: (Self) throws -> Void) rethrows {
+        try block(self)
     }
 }

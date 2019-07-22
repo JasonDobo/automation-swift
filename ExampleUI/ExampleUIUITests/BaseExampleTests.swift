@@ -107,4 +107,65 @@ class BaseExampleTests: XCTestCase {
         tryWait(for: element, with: state, waiting: timeout)
         element.tap()
     }
+
+    @discardableResult
+    func tryWaitForAll(elements: [XCUIElement], withState state: ElementState, with strategy: MatchingCountStratagey, timeout time: TimeInterval = 15.0, handler: (([XCUIElement]) -> Void)? = nil) -> Bool {
+        let myPredicate = NSPredicate(format: state.rawValue)
+        var matchedElements: [XCUIElement]?
+        var allExpectations: [XCTNSPredicateExpectation] = []
+        var elementsMatched: [XCUIElement] = []
+
+        allExpectations = elements.enumerated().map { (_, element) in
+            return XCTNSPredicateExpectation(predicate: myPredicate, object: element).with {
+                $0.handler = {
+                    if matchedElements != nil { return true }
+                    elementsMatched.append(element)
+                    switch strategy {
+                    case .all:
+                        if elementsMatched.count == elements.count {
+                            matchedElements = elements
+                            allExpectations.forEach { $0.fulfill() }
+                        }
+                    case let .count(count):
+                        if elementsMatched.count == count {
+                            matchedElements = elements
+                            allExpectations.forEach { $0.fulfill() }
+                        }
+                    }
+                    return true
+                }
+            }
+        }
+
+        let result = XCTWaiter().wait(for: allExpectations, timeout: time, enforceOrder: false)
+        if let matchedElements = matchedElements {
+            handler?(matchedElements)
+        }
+        return result == .completed
+    }
+
+    @discardableResult
+    func tryWaitFor(elements: [XCUIElement], withState state: ElementState, timeout: TimeInterval = 15.0, handler: ((XCUIElement) -> Void)? = nil) -> Bool {
+        let myPredicate = NSPredicate(format: state.rawValue)
+        var matchedElement: XCUIElement?
+
+        var allExpectations: [XCTNSPredicateExpectation]!
+
+        allExpectations = elements.map { (element) -> XCTNSPredicateExpectation in
+            return XCTNSPredicateExpectation(predicate: myPredicate, object: element).with {
+                $0.handler = {
+                    if matchedElement != nil { return true }
+                    matchedElement = element
+                    allExpectations.forEach { $0.fulfill() }
+                    return true
+                }
+            }
+        }
+
+        let result = XCTWaiter().wait(for: allExpectations, timeout: timeout, enforceOrder: false)
+        if let matchedElement = matchedElement {
+            handler?(matchedElement)
+        }
+        return result == .completed
+    }
 }
