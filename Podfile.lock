@@ -7,12 +7,12 @@ DEPENDENCIES:
   - XCTest-Gherkin
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - XCTest-Gherkin
 
 SPEC CHECKSUMS:
   XCTest-Gherkin: f7cb7e6407a9196fdef068aed0becc321ef0b812
 
-PODFILE CHECKSUM: db29d2d04ea0f2ae522be9f084174162d6d2c0f8
+PODFILE CHECKSUM: f0350059d83e01d34a13590c36991d08c179195a
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.11.3
